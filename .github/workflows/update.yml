@@ -2,8 +2,8 @@ name: "index-generate"
 on:
   workflow_dispatch:
   schedule:
-    # Randomly selected: every Monday at 05:29
-    - cron: '29 5 * * 1'
+    # Randomly selected: every Sunday at 2
+  - cron: '0 2 * * 0'
 jobs:
   update-lock:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: Release ${{ steps.date.outputs.date }}
+        name: Release ${{ "Stable - " + steps.date.outputs.date }}
         tag_name: ${{ steps.date.outputs.date }}
 
 
