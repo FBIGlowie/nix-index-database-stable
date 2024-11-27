@@ -47,7 +47,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: Release ${{ "Stable - " + steps.date.outputs.date }}
+        name: Release ${{ format('Stable - {0}', steps.date.outputs.date) }}
         tag_name: ${{ steps.date.outputs.date }}
 
 
