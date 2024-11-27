@@ -18,10 +18,16 @@ jobs:
           system-features = nixos-test benchmark big-parallel kvm
     - name: Update the flake lock
       run: |
-        git fetch
-        git pull
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
+        git fetch origin main
+        git merge --allow-unrelated-histories origin/main || {
+        echo "Merge conflict occurred. Resolving..."
+        git merge --abort
+        git reset --hard origin/main
+        nix flake update --commit-lock-file
+        git add .
+        }
         nix flake update --commit-lock-file
         git push origin HEAD:main
 
