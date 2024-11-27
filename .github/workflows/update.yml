@@ -97,12 +97,7 @@ jobs:
         extra_nix_config: |
           access-tokens = github.com=${{ github.token }}
           system-features = nixos-test benchmark big-parallel kvm
-    # for nix-index
-    - name: Setup cachix
-      uses: cachix/cachix-action@v15
-      with:
-        name: mic92
-        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+    - uses: DeterminateSystems/magic-nix-cache-action@v2
     - name: run nix-index
       run: |
         nix shell --inputs-from .# nixpkgs#nix-index -c nix-index --db ./${{ matrix.system }}-index --system ${{matrix.system}} 2>&1 | grep -v '+ generating index:'
